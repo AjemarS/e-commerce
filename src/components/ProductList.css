@@ -1,0 +1,17 @@
+.product__list {
+  max-width: 100%;
+  width: 1000px;
+  display: flex;
+  padding: 15px;
+  color: black;
+  box-shadow: 0px 0px 25px 0px rgba(128, 128, 0, 0.1);
+  transition: all ease 0.3s;
+}
+.product__list:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 40px 0px rgba(128, 128, 0, 0.4);
+}
+.product__list--image img {
+  width: 150px;
+  max-height: 175px;
+}

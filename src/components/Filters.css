@@ -1,0 +1,29 @@
+aside {
+  width: 70px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  box-shadow: -10px 15px 40px 0px rgba(128, 128, 0, 0.2);
+}
+.filters__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+aside button {
+  width: 60px;
+  float: left;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: display ease-in 1s;
+}
+.filters__title__label {
+  font-size: 24px;
+  font-weight: 400;
+}
+.filters__menu__categories__checkboxes {
+  accent-color: olive;
+}
