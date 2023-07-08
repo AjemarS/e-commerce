@@ -6,6 +6,7 @@ import {
   searchProducts,
   selectSearchQuery,
 } from "../store/reducers/SearchSlice";
+import { updateCurrentProducts } from "../store/reducers/ProductSlice";
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();
@@ -13,9 +14,11 @@ const SearchBar = () => {
 
   function changeSearchTerm(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch(setSearchQuery(e.target.value));
+    return (e.target.value = "");
   }
   const handleSearch = () => {
     dispatch(searchProducts());
+    dispatch(updateCurrentProducts());
   };
 
   return (

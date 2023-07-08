@@ -1,27 +1,29 @@
 import React, { useState } from "react";
 import "./Filters.css";
 import RenderComponent from "./RenderComponent";
-import { IProductCategory } from "../models/product";
 import Checkbox from "./Checkbox";
 import { useAppDispatch } from "../hooks/redux";
 import { setPrice, setPriceRange } from "../store/reducers/FiltersSlice";
-import { useFetchAllCategoriesQuery } from "../services/CategoryService";
+import { useFetchAllCategoriesQuery } from "../services/ProductService";
+import { updateCurrentProducts } from "../store/reducers/ProductSlice";
 
 const Filters: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data: categories } = useFetchAllCategoriesQuery("");
+  const { data: categories } = useFetchAllCategoriesQuery();
 
   const dispatch = useAppDispatch();
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setPrice(Number(e.target.value)));
+    dispatch(updateCurrentProducts());
   };
 
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const priceRange: [number, number] = JSON.parse(value);
     dispatch(setPriceRange(priceRange));
+    dispatch(updateCurrentProducts());
   };
 
   return isOpen ? (
@@ -55,8 +57,11 @@ const Filters: React.FC = () => {
             {categories && (
               <RenderComponent
                 items={categories}
-                renderItem={(category: IProductCategory) => (
-                  <Checkbox key={category.id} category={category} />
+                renderItem={(category: string) => (
+                  <Checkbox
+                    key={categories.indexOf(category)}
+                    category={category}
+                  />
                 )}
               />
             )}

@@ -28,20 +28,19 @@ const FiltersSlice = createSlice({
     setPriceRange: (state, action: PayloadAction<[number, number]>) => {
       state.priceRange = action.payload;
     },
-    filterProduct: (state, action: PayloadAction<[]>) => {
+    filterProduct: (state, action: PayloadAction<IProduct[]>) => {
       state.filteredProducts = action.payload.filter((product: IProduct) => {
-        if (state.category && product.category.name !== state.category) {
+        if (product.category !== state.category) {
           return false;
         }
 
-        if (state.price && product.price !== state.price) {
+        if (product.price !== state.price) {
           return false;
         }
 
         if (
-          state.priceRange &&
-          (product.price < state.priceRange[0] ||
-            product.price > state.priceRange[1])
+          product.price < state.priceRange[0] ||
+          product.price > state.priceRange[1]
         ) {
           return false;
         }
@@ -52,5 +51,6 @@ const FiltersSlice = createSlice({
   },
 });
 
-export const { setCategory, setPrice, setPriceRange } = FiltersSlice.actions;
+export const { setCategory, setPrice, setPriceRange, filterProduct } =
+  FiltersSlice.actions;
 export default FiltersSlice.reducer;
