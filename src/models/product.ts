@@ -3,13 +3,11 @@ export interface IProduct {
   title: string;
   price: number;
   description: string;
-  category: IProductCategory;
+  category: string;
+  brand: string
   images: string[];
 }
-export interface IProductCategory {
-  id: number;
-  name: string;
-}
+
 export interface ProductProps {
   product: IProduct;
 }

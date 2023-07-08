@@ -3,19 +3,16 @@ import {
   configureStore,
   ThunkAction,
   Action,
-  getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import filtersReducer from "./reducers/FiltersSlice";
 import searchReducer from "./reducers/SearchSlice";
 import productReducer from "./reducers/ProductSlice";
-import { categoryAPI } from "../services/CategoryService";
 import { productAPI } from "../services/ProductService";
 
 const rootReducer = combineReducers({
   product: productReducer,
   filter: filtersReducer,
   search: searchReducer,
-  [categoryAPI.reducerPath]: categoryAPI.reducer,
   [productAPI.reducerPath]: productAPI.reducer,
 });
 
@@ -25,7 +22,6 @@ export const setupStore = () => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(productAPI.middleware)
-        .concat(categoryAPI.middleware),
   });
 };
 

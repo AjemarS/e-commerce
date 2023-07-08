@@ -1,10 +1,9 @@
 import React from "react";
 import { useAppDispatch } from "../hooks/redux";
-import { IProductCategory } from "../models/product";
 import { setCategory } from "../store/reducers/FiltersSlice";
 
 interface CheckboxProps {
-  category: IProductCategory;
+  category: string;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({ category }) => {
@@ -17,10 +16,10 @@ const Checkbox: React.FC<CheckboxProps> = ({ category }) => {
     <div>
       <input
         type='checkbox'
-        id={category.name}
+        id={category}
         onChange={handleCategoryChange}
       />
-      <label htmlFor={category.name}>{category.name}</label>
+      <label htmlFor={category}>{category}</label>
     </div>
   );
 };
