@@ -7,7 +7,7 @@ const ProductCard: FC<ProductProps> = ({ product }) => {
   function clickHandler() {}
 
   return (
-    <Link to={"/products/:id"}>
+    <Link to={`/products/${product.id}`}>
       <div className='product__card'>
         <div className='product__card--title'>{product.title}</div>
         <div className='product__card--image'>

@@ -4,6 +4,7 @@ header {
   position: sticky;
   top: 0;
   background: white;
+  flex-grow: 0;
 }
 nav {
   display: flex;
@@ -26,11 +27,11 @@ nav {
 }
 .navbar__item--btns img {
   transition: all ease 0.5s;
-  border: 5px solid transparent;
+  border: 3px solid transparent;
 }
 .navbar__item--btns img:hover {
-  border-radius: 5px;
-  border: 5px solid olive;
+  border-radius: 4px;
+  border-bottom: 3px solid olive;
 }
 .navbar__item--login-btn {
   background-color: black;

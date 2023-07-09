@@ -15,7 +15,6 @@ export const productAPI = createApi({
       }),
       transformResponse: (response: { products: IProduct[] }) =>
         response.products,
-
       providesTags: (result) => ["Product"],
     }),
 

@@ -1,0 +1,36 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+.paginationComponent {
+  max-width: 100%;
+  min-width: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  font-size: 20px;
+  margin-top: 0;
+  padding: 10px 5px;
+  box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.2);
+}
+.paginationComponent li {
+  padding: 10px 5px;
+  border-radius: 5px;
+}
+.paginationComponent li a {
+  padding: 10px 20px;
+}
+.paginationComponent li:hover {
+  cursor: pointer;
+}
+.activePage {
+  background-color: olive;
+  color: white;
+}
+.paginationComponent li:hover:not(.activePage) {
+  background-color: #ddd;
+}

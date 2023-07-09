@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const ProductList: FC<ProductProps> = ({ product }) => {
   function clickHandler() {}
 
-  return (
-    <Link to={"/products/:id"}>
+  return (    
+    <Link to={`/products/${product.id}`}>
       <div className='product__list'>
         <div className='product__list--top'>
           <div className='product__list--title'>{product.title}</div>

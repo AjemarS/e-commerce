@@ -1,12 +1,12 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
+import "./Pagination.css";
 
 interface PaginationProps {
   currentPage: number;
   productsPerPage: number;
   totalProducts: number;
   onPageChange: (pageNumber: number) => void;
-  onProductsPerPageChange: (value: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -14,7 +14,6 @@ const Pagination: React.FC<PaginationProps> = ({
   productsPerPage,
   totalProducts,
   onPageChange,
-  onProductsPerPageChange,
 }) => {
   const pageCount = Math.ceil(totalProducts / productsPerPage);
 
@@ -23,31 +22,20 @@ const Pagination: React.FC<PaginationProps> = ({
     onPageChange(selectedPage);
   };
 
-  const handleProductsPerPageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const value = parseInt(event.target.value, 10);
-    onProductsPerPageChange(value);
-  };
-
   return (
-    <div>
+    <section className="pagination">
       <ReactPaginate
         pageCount={pageCount}
         marginPagesDisplayed={2}
         pageRangeDisplayed={3}
         onPageChange={handlePageClick}
         forcePage={currentPage - 1}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
+        containerClassName={"paginationComponent"}
+        activeClassName={"activePage"}
+        previousLabel="<"
+        nextLabel=">"
       />
-
-      <select value={productsPerPage} onChange={handleProductsPerPageChange}>
-        <option value={20}>20 на сторінку</option>
-        <option value={100}>100 на сторінку</option>
-        <option value={0}>Всі на сторінку</option>
-      </select>
-    </div>
+    </section>
   );
 };
 export default Pagination;
