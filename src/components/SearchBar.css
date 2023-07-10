@@ -3,12 +3,18 @@
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  border: 1px solid black;
 }
 .searchBar button {
   background-color: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
+  margin-left: 10px;
+  font-size: 18px;
+}
+.hidden {
+  visibility: hidden;
 }
 .searchBar img {
   display: flex;

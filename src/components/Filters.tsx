@@ -27,33 +27,33 @@ const Filters: React.FC = () => {
   };
 
   return isOpen ? (
-    <aside>
-      <div className='filters__title'>
+    <aside className="closed">
+      <div className="filters__title">
         <button
           onClick={() => {
             setIsOpen(!isOpen);
           }}
         >
-          <img src='../assets/icons-filter.png' alt='' />
+          <img src="../assets/icons-filter.png" alt="" />
         </button>
       </div>
     </aside>
   ) : (
     <aside style={{ width: "250px" }}>
-      <div className='filters__title'>
+      <div className="filters__title">
         <button
           onClick={() => {
             setIsOpen(!isOpen);
           }}
         >
-          <img src='../assets/icons-filter.png' alt='' />
+          <img src="../assets/icons-filter.png" alt="" />
         </button>
-        <span className='filters__title__label'>Filters</span>
+        <span className="filters__title__label">Filters</span>
       </div>
-      <div className='filters__menu'>
-        <div className='filters__menu__categories'>
-          <div className='filters__menu__categories__title'>Categories</div>
-          <div className='filters__menu__categories__checkboxes'>
+      <div className="filters__menu">
+        <div className="filters__menu__categories">
+          <div className="filters__menu__categories__title">Categories</div>
+          <div className="filters__menu__categories__checkboxes">
             {categories && (
               <RenderComponent
                 items={categories}
@@ -66,11 +66,11 @@ const Filters: React.FC = () => {
               />
             )}
           </div>
-          <div className='filters__menu__categories__price'>
-            <input type='number' id='' onChange={handlePriceChange} />
+          <div className="filters__menu__categories__price">
+            <input type="number" id="" onChange={handlePriceChange} />
           </div>
-          <div className='filters__menu__categories__price-range'>
-            <input type='range' id='' onChange={handlePriceRangeChange} />
+          <div className="filters__menu__categories__price-range">
+            <input type="range" id="" onChange={handlePriceRangeChange} />
           </div>
         </div>
       </div>

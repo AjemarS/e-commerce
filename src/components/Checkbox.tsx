@@ -15,9 +15,11 @@ const Checkbox: React.FC<CheckboxProps> = ({ category }) => {
   return (
     <div>
       <input
-        type='checkbox'
+        type="checkbox"
         id={category}
         onChange={handleCategoryChange}
+        title="Click it!"
+        style={{ cursor: "pointer" }}
       />
       <label htmlFor={category}>{category}</label>
     </div>
