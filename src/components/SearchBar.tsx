@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "./SearchBar.css";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import {
@@ -9,36 +9,39 @@ import {
 import { updateCurrentProducts } from "../store/reducers/ProductSlice";
 
 const SearchBar = () => {
-  const [isHidden, setIsHidden] = useState('hidden')
+  const [isHidden, setIsHidden] = useState("hidden");
 
   const dispatch = useAppDispatch();
   const searchQuery = useAppSelector(selectSearchQuery);
 
   function changeSearchTerm(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch(setSearchQuery(e.target.value));
-    setIsHidden('hidden')
+    setIsHidden("hidden");
     return (e.target.value = "");
   }
-  const handleSearchEmptyQuery =()=>{
-    dispatch(setSearchQuery(''))
-  }
+  const handleSearchEmptyQuery = () => {
+    dispatch(setSearchQuery(""));
+  };
   const handleSearch = () => {
-    setIsHidden('')
+    setIsHidden("");
     dispatch(searchProducts());
     dispatch(updateCurrentProducts());
   };
 
   return (
-    <div className='searchBar'>
+    <div className="searchBar">
       <input
         onChange={changeSearchTerm}
         value={searchQuery}
-        type='text'
-        placeholder='Search'
+        type="text"
+        placeholder="Search"
+        title="Find a good by title"
       />
-      <button className={isHidden} onClick={handleSearchEmptyQuery}>x</button>
+      <button className={isHidden} onClick={handleSearchEmptyQuery}>
+        x
+      </button>
       <button onClick={handleSearch}>
-        <img src='../assets/icons-search.png' alt='' />
+        <img src="../assets/icons-search.png" alt="" />
       </button>
     </div>
   );

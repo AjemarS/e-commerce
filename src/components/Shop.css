@@ -1,16 +1,28 @@
 .shop {
-  width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  box-shadow: inset 200px 200px 40px -200px rgba(0, 0, 0, 0.2);
+  /* box-shadow: inset 200px 200px 40px -200px rgba(0, 0, 0, 0.2); */
 }
 .cards > div {
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 30px;
+  padding: 30px;
+}
+.list > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 25px;
   padding: 30px;
+}
+.list a {
+  width: 100%;
 }
 .shop__options {
   margin: 20px 20px 0 20px;

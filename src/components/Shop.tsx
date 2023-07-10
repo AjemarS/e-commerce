@@ -84,7 +84,7 @@ const Shop: React.FC = () => {
           </button>
         </div>
       </section>
-      <section className="cards">
+      <section className={isList ? "list" : "cards"}>
         <RenderComponent
           items={currentPageProducts}
           renderItem={(product: IProduct) =>

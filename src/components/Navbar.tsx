@@ -8,37 +8,37 @@ const Navbar = () => {
   return (
     <header>
       <nav>
-        <div className='navbar__item--logo'>
+        <div className="navbar__item--logo">
           <Link to={"/"}>
             <span>Shop</span>
           </Link>
         </div>
 
-        <div className='navbar__item--search'>
+        <div className="navbar__item--search">
           <SearchBar />
         </div>
 
-        <div className='navbar__item--btns'>
-          <div className='navbar__item--liked'>
+        <div className="navbar__item--btns">
+          <div className="navbar__item--liked">
             <Link to={"/liked"}>
-              <img src='../assets/icons-love.png' alt='' />
+              <img src="../assets/icons-love.png" alt="" />
             </Link>
           </div>
-          <div className='navbar__item--cart'>
+          <div className="navbar__item--cart">
             <Link to={"/cart"}>
-              <img src='../assets/icons-cart.png' alt='' />
+              <img src="../assets/icons-cart.png" alt="" />
             </Link>
           </div>
           {isLogin ? (
-            <div className='navbar__item--user'>
+            <div className="navbar__item--user">
               <Link to={"/login"}>
-                <img src='../assets/icons-user.png' alt='' />
+                <img src="../assets/icons-user.png" alt="" />
               </Link>
             </div>
           ) : (
             <Link to={"/login"}>
               <button
-                className='navbar__item--login-btn'
+                className="navbar__item--login-btn"
                 onClick={() => {
                   setIsLogin(!isLogin);
                 }}
