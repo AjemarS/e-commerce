@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import RenderComponent from "./RenderComponent";
+// import RenderComponent from "./RenderComponent";
 
 type Props = {};
 
