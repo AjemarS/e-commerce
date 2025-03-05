@@ -3,8 +3,8 @@ import Link from "next/link";
 import SignIn from "./sign-in";
 import { Input } from "./ui/input";
 import ModeToggle from "./ModeToggle";
-import { auth } from "@/auth";
 import UserCenter from "./UserCenter";
+import { auth } from "@/lib/auth";
 
 export default async function Header() {
   const session = await auth();
