@@ -8,7 +8,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Google({
       profile(profile) {
-        return { role: profile.role ?? "user", ...profile };
+        // Get all the needed fields from profile
+        return {
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: profile.role ?? "user",
+          emailVerified: profile.email_verified,
+        };
       },
     }),
   ],

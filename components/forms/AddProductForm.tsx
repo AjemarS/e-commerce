@@ -15,10 +15,11 @@ import {
 } from "../ui/dropdown-menu";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().max(50),
-  price: z.number().min(0),
+  price: z.string().min(0),
   image: z.string().max(200),
   category: z.string().max(50),
   description: z.string().max(200),
@@ -43,7 +44,7 @@ export default function ProductForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      price: 0,
+      price: "",
       image: "",
       category: "",
       description: "",
@@ -64,9 +65,10 @@ export default function ProductForm() {
     });
 
     if (res.ok) {
-      alert("Продукт додано");
+      toast("Product added successfully");
+      form.reset();
     } else {
-      alert("Помилка при додаванні");
+      alert("Error adding product");
     }
   }
 
@@ -93,7 +95,7 @@ export default function ProductForm() {
             <FormItem>
               <FormLabel>Price*</FormLabel>
               <FormControl>
-                <Input placeholder="Name" type="number" required {...field} />
+                <Input placeholder="Price" type="number" required {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

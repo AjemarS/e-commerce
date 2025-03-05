@@ -9,7 +9,7 @@ export default async function ProductsPage() {
   }
 
   if (session?.user.role !== "admin") {
-    return { status: 403, body: { message: "You are not supposed to be here. Get out!" } };
+    return <div>You are not supposed to be here. Get out!</div>;
   }
 
   return (

@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "../ui/form";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().max(50),
@@ -27,12 +28,12 @@ export default function CategoryForm() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: values.name,
+      name: values.name,
       }),
     });
 
     if (res.ok) {
-      alert("Category added");
+      toast("Category added successfully.");
       form.reset();
       router.back();
     } else {
