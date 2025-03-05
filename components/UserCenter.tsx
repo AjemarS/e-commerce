@@ -18,8 +18,8 @@ export default function UserCenter({ user }: { user?: User }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          {user?.image ? (
-            <AvatarImage src={user.image} />
+          {user?.picture ? (
+            <AvatarImage src={user.picture} />
           ) : (
             <div className="w-full flex items-center justify-center">
               <UserRound />
