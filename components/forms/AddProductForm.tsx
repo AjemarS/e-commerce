@@ -31,6 +31,7 @@ const formSchema = z.object({
 });
 
 interface Category {
+  _id: string;
   name: string;
   description: string;
 }
@@ -134,7 +135,7 @@ export default function ProductForm() {
                   </FormControl>
                   <SelectContent>
                     {categories.map((category) => (
-                      <SelectItem key={category.name} value={category.name}>
+                      <SelectItem key={category.name} value={category._id}>
                         {category.name}
                       </SelectItem>
                     ))}

@@ -1,10 +1,14 @@
 import { translit } from "@/lib/utils";
 import { Schema, model, models } from "mongoose";
 
-const CategorySchema = new Schema({
+interface ICategory extends Document {
+  name: string;
+  slug: string;
+}
+
+const CategorySchema = new Schema<ICategory>({
   name: { type: String, required: true, trim: true },
-  slug: { type: String, unique: true, lowercase: true},
-  description: { type: String, trim: true },
+  slug: { type: String, unique: true, lowercase: true },
 });
 
 CategorySchema.pre("save", async function (next) {

@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/mongodb";
 import { Category } from "@/models/Category";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   await connectDB();
 
   try {
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   await connectDB();
 
   try {

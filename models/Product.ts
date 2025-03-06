@@ -1,15 +1,22 @@
 import { translit } from "@/lib/utils";
-import { Schema, model, models } from "mongoose";
+import { Schema, Types, model, models } from "mongoose";
 
-const ProductSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, auto: true },
+interface IProduct extends Document {
+  name: string;
+  slug: string;
+  price: number;
+  description: string;
+  category: Types.ObjectId;
+  image: string;
+}
+
+const ProductSchema = new Schema<IProduct>({
   name: { type: String, required: true, trim: true },
   slug: { type: String, unique: true, lowercase: true },
   price: { type: Number, required: true },
   description: { type: String },
-  category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   image: { type: String },
-  createdAt: { type: Date, default: Date.now },
+  category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
 });
 
 ProductSchema.pre("save", async function (next) {
