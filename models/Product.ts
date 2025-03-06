@@ -1,10 +1,11 @@
 import { translit } from "@/lib/utils";
 import { Schema, Types, model, models } from "mongoose";
 
-interface IProduct extends Document {
+export interface IProduct extends Document {
   name: string;
   slug: string;
   price: number;
+  amount: number;
   description: string;
   category: Types.ObjectId;
   image: string;
@@ -14,6 +15,7 @@ const ProductSchema = new Schema<IProduct>({
   name: { type: String, required: true, trim: true },
   slug: { type: String, unique: true, lowercase: true },
   price: { type: Number, required: true },
+  amount: { type: Number, required: true },
   description: { type: String },
   image: { type: String },
   category: { type: Schema.Types.ObjectId, ref: "Category", required: true },

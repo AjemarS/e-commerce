@@ -7,14 +7,7 @@ import { Button } from "../ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "../ui/form";
 import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import { CirclePlus } from "lucide-react";
-import Link from "next/link";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { SelectValue } from "@radix-ui/react-select";
@@ -24,7 +17,14 @@ import AddCategoryForm from "./AddCategoryForm";
 
 const formSchema = z.object({
   name: z.string().max(50),
-  price: z.string().min(0),
+  price: z
+    .number()
+    .min(0)
+    .transform((n) => Number(n)),
+  amount: z
+    .number()
+    .min(1)
+    .transform((n) => Number(n)),
   image: z.string().max(200),
   category: z.string().max(50),
   description: z.string().max(200),
@@ -33,7 +33,6 @@ const formSchema = z.object({
 interface Category {
   _id: string;
   name: string;
-  description: string;
 }
 
 export default function ProductForm() {
@@ -50,7 +49,8 @@ export default function ProductForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      price: "",
+      price: 0,
+      amount: 1,
       image: "",
       category: "",
       description: "",
@@ -63,7 +63,8 @@ export default function ProductForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: values.name,
-        price: Number(values.price),
+        price: values.price,
+        amount: values.amount,
         image: values.image,
         category: values.category,
         description: values.description,
@@ -102,6 +103,19 @@ export default function ProductForm() {
               <FormLabel>Price*</FormLabel>
               <FormControl>
                 <Input placeholder="Price" type="number" required {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Amount*</FormLabel>
+              <FormControl>
+                <Input placeholder="Amount" type="number" required {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
