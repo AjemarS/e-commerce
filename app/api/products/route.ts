@@ -1,28 +1,29 @@
 import { connectDB } from "@/lib/mongodb";
 import { Product } from "@/models/Product";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: NextRequest, res: NextResponse) {
   await connectDB();
 
   try {
     const { name, price, category, description, image } = await req.json();
 
     if (!name || !price || !category) {
-      return Response.json({ message: "All fields are required." });
+      return NextResponse.json({ message: "All fields are required." });
     }
 
     const product = await Product.create({ name, price, category, description, image });
-    return Response.json(product);
+    return NextResponse.json(product);
   } catch (error: any) {
-    return Response.json({ message: error.message });
+    return NextResponse.json({ message: error.message });
   }
 }
 
-export async function GET(req: Request, res: Response) {
+export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
-    return Response.json(products);
+    return NextResponse.json(products);
   } catch (error: any) {
-    return Response.json({ message: error.message });
+    return NextResponse.json({ message: error.message });
   }
 }
