@@ -26,7 +26,7 @@ ProductSchema.pre("save", async function (next) {
 
     this.slug = uniqueSlug;
   }
-  next();
+  return next();
 });
 
 export const Product = models.Product || model("Product", ProductSchema);

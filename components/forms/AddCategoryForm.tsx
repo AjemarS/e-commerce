@@ -6,20 +6,20 @@ import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "../ui/form";
 import { Input } from "../ui/input";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
   name: z.string().max(50),
+  description: z.string().max(200),
 });
 
 export default function CategoryForm() {
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      description: "",
     },
   });
 
@@ -28,14 +28,14 @@ export default function CategoryForm() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-      name: values.name,
+        name: values.name,
+        description: values.description,
       }),
     });
 
     if (res.ok) {
       toast("Category added successfully.");
       form.reset();
-      router.back();
     } else {
       alert("Error adding category. Please try again.");
     }
@@ -52,6 +52,19 @@ export default function CategoryForm() {
               <FormLabel>Name*</FormLabel>
               <FormControl>
                 <Input placeholder="Name" required {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

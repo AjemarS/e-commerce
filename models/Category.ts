@@ -4,7 +4,7 @@ import { Schema, model, models } from "mongoose";
 const CategorySchema = new Schema({
   name: { type: String, required: true, trim: true },
   slug: { type: String, unique: true, lowercase: true},
-  description: { type: String, required: true, trim: true },
+  description: { type: String, trim: true },
 });
 
 CategorySchema.pre("save", async function (next) {

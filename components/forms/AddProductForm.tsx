@@ -16,6 +16,11 @@ import {
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
+import { SelectValue } from "@radix-ui/react-select";
+import { Textarea } from "../ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import AddCategoryForm from "./AddCategoryForm";
 
 const formSchema = z.object({
   name: z.string().max(50),
@@ -120,21 +125,33 @@ export default function ProductForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category*</FormLabel>
-              <FormControl>
-                <div className="flex justify-between items-center">
-                  <DropdownMenu {...field}>
-                    <DropdownMenuTrigger>Choose a category</DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                      {categories.map((category, index) => (
-                        <DropdownMenuItem key={index}>{category.name}</DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/categories/add`}>
+              <div className="flex justify-between items-center">
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={"Choose a category"} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories.map((category) => (
+                      <SelectItem key={category.name} value={category.name}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Dialog>
+                  <DialogTrigger asChild>
                     <CirclePlus />
-                  </Link>
-                </div>
-              </FormControl>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add a category</DialogTitle>
+                    </DialogHeader>
+                    <AddCategoryForm />
+                  </DialogContent>
+                </Dialog>
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -146,7 +163,7 @@ export default function ProductForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="Description" {...field} />
+                <Textarea placeholder="Describe this product" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
