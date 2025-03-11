@@ -1,9 +1,5 @@
 import { auth, signIn } from "@/lib/auth";
-
-interface Category {
-  name: string;
-  description: string;
-}
+import { ICategory } from "@/models/Category";
 
 export default async function CategoriesPage() {
   const session = await auth();
@@ -16,7 +12,7 @@ export default async function CategoriesPage() {
     return { status: 403, body: { message: "You are not supposed to be here. Get out!" } };
   }
 
-  const categories: Category[] = await fetch("http://localhost:3000/api/categories").then((res) =>
+  const categories: ICategory[] = await fetch("http://localhost:3000/api/categories").then((res) =>
     res.json()
   );
 

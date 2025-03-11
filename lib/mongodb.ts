@@ -8,12 +8,15 @@ if (!process.env.MONGODB_URI) {
 
 const uri = process.env.MONGODB_URI;
 const options = {
+  dbName: "auth",
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
   },
 };
+
+const connections: { [key: string]: mongoose.Connection } = {};
 
 let client: MongoClient;
 
@@ -32,25 +35,20 @@ if (process.env.NODE_ENV === "development") {
   // In production mode, it's best to not use a global variable.
   client = new MongoClient(uri, options);
 }
-
 // Export a module-scoped MongoClient. By doing this in a
 // separate module, the client can be shared across functions.
 export default client;
 
-let cached = (global as any).mongoose || { conn: null, promise: null };
-
-export const connectDB = async () => {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(process.env.MONGODB_URI!, {
-        dbName: "myshop",
-        bufferCommands: false,
-      })
-      .then((mongoose) => mongoose);
+/**
+ * Cached connection for MongoDB.
+ */
+export async function connectDB(dbName: "auth" | "shop") {
+  if (connections[dbName]) {
+    return connections[dbName];
   }
 
-  cached.conn = await cached.promise;
-  return cached.conn;
-};
+  const connection = await mongoose.createConnection(uri, { dbName: dbName }).asPromise();
+
+  connections[dbName] = connection;
+  return connection;
+}

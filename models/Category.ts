@@ -1,7 +1,8 @@
+import { connectDB } from "@/lib/mongodb";
 import { translit } from "@/lib/utils";
-import { Schema, model, models } from "mongoose";
+import { Schema } from "mongoose";
 
-interface ICategory extends Document {
+export interface ICategory extends Document {
   name: string;
   slug: string;
 }
@@ -17,7 +18,7 @@ CategorySchema.pre("save", async function (next) {
     let uniqueSlug = slug;
     let counter = 1;
 
-    const existing = await Category.findOne({ slug: uniqueSlug });
+    const existing = await isSlugUnique(uniqueSlug);
     while (existing) {
       uniqueSlug = `${slug}-${counter}`;
       counter++;
@@ -28,4 +29,12 @@ CategorySchema.pre("save", async function (next) {
   next();
 });
 
-export const Category = models.Category || model("Category", CategorySchema);
+export const getCategoryModel = async () => {
+  const db = await connectDB("shop"); 
+  return db.models.Product || db.model("Category", CategorySchema);
+};
+
+const isSlugUnique = async (uniqueSlug: string) => {
+  const Category = await getCategoryModel();
+  return Category.findOne({ slug: uniqueSlug });
+};

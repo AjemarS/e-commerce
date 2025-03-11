@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google";
 import client from "./mongodb";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: MongoDBAdapter(client),
+  adapter: MongoDBAdapter(client, { databaseName: "auth" }),
   providers: [
     Google({
       profile(profile) {
