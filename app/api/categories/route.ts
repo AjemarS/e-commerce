@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "All fields are required." });
     }
 
-    const Category = await getCategoryModel()
+    const Category = await getCategoryModel();
 
     const category = await Category.create({ name });
 
@@ -32,5 +32,25 @@ export async function GET() {
     return NextResponse.json(categories);
   } catch (error: any) {
     return NextResponse.json({ message: error.message });
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    const { name, slug } = await req.json();
+
+    const Category = await getCategoryModel();
+
+    const category = await Category.findOne({ slug });
+
+    if (!category) throw new Error("Failed to receive category!");
+
+    category.name = name;
+
+    await category.save();
+
+    return NextResponse.json(category);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message});
   }
 }

@@ -1,7 +1,7 @@
-import AddCategoryForm from "@/components/forms/AddCategoryForm";
+import AddCategoryForm from "@/components/forms/CategoryForm";
 import { auth, signIn } from "@/lib/auth";
 
-export default async function ProductsPage() {
+export default async function AddCategoriesPage() {
   const session = await auth();
 
   if (!session) {

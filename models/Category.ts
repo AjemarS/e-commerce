@@ -13,28 +13,30 @@ const CategorySchema = new Schema<ICategory>({
 });
 
 CategorySchema.pre("save", async function (next) {
-  if (this.isModified("name")) {
-    const slug = translit(this.name);
-    let uniqueSlug = slug;
-    let counter = 1;
+  const slug = translit(this.name);
 
-    const existing = await isSlugUnique(uniqueSlug);
-    while (existing) {
-      uniqueSlug = `${slug}-${counter}`;
-      counter++;
-    }
+  if (this.slug === slug) return next();
 
-    this.slug = uniqueSlug;
+  let uniqueSlug = slug;
+  let counter = 1;
+
+  const existing = await isSlugUnique(uniqueSlug);
+  while (existing) {
+    uniqueSlug = `${slug}-${counter}`;
+    counter++;
   }
+
+  this.slug = uniqueSlug;
+
   next();
 });
 
 export const getCategoryModel = async () => {
-  const db = await connectDB("shop"); 
+  const db = await connectDB("shop");
   return db.models.Product || db.model("Category", CategorySchema);
 };
 
 const isSlugUnique = async (uniqueSlug: string) => {
   const Category = await getCategoryModel();
-  return Category.findOne({ slug: uniqueSlug });
+  return !!(await Category.findOne({ slug: uniqueSlug }));
 };

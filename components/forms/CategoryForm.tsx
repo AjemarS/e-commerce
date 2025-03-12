@@ -7,33 +7,48 @@ import { Button } from "../ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "../ui/form";
 import { Input } from "../ui/input";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().max(50),
 });
 
-export default function CategoryForm() {
+export default function CategoryForm({ category }: { category?: { name: string; slug: string } }) {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: category?.name,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const res = await fetch("/api/categories", {
-      method: "POST",
+      method: category ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: values.name,
-      }),
+      body: category
+        ? JSON.stringify({
+            name: values.name,
+            slug: category.slug,
+          })
+        : JSON.stringify({
+            name: values.name,
+          }),
     });
 
     if (res.ok) {
-      toast("Category added successfully.");
-      form.reset();
+      const data = await res.json();
+
+      toast(`Category ${category ? "updated" : "created"} successfully.`);
+      
+      if (category) {
+        router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/categories/${data.slug}`);
+      } else {
+        form.reset();
+      }
     } else {
-      alert("Error adding category. Please try again.");
+      alert(`Error ${category ? "updating" : "creating"} category. Please try again.`);
     }
   }
 
@@ -53,7 +68,7 @@ export default function CategoryForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{category ? "Update" : "Submit"}</Button>
       </form>
     </Form>
   );
