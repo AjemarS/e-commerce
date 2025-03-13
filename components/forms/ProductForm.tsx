@@ -7,17 +7,15 @@ import { Button } from "../ui/button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "../ui/form";
 import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
-import { CirclePlus, Settings } from "lucide-react";
+import { CirclePlus } from "lucide-react";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
-import { SelectValue } from "@radix-ui/react-select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import AddCategoryForm from "./CategoryForm";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Switch } from "../ui/switch";
-import { Label } from "../ui/label";
 import SettingsPopover from "./SettingsPopover";
+import { ICategory, IProduct } from "@/types";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().max(50, { message: "Too many characters" }),
@@ -30,14 +28,11 @@ const formSchema = z.object({
   description: z.string().max(200).optional(),
 });
 
-interface Category {
-  _id: string;
-  name: string;
-}
-
-export default function ProductForm() {
+export default function ProductForm({ product }: { product?: IProduct }) {
   const [isResetFormOnSubmit, setIsResetFormOnSubmit] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`)
@@ -48,6 +43,13 @@ export default function ProductForm() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: product?.name,
+      price: product?.price,
+      stock: product?.stock,
+      description: product?.description,
+      // Can't describe image, because browser don't allow that
+    },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -55,25 +57,38 @@ export default function ProductForm() {
 
     if (!result.success) toast(result.error.message);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`, {
-      method: "POST",
+    const res = await fetch(`/api/products`, {
+      method: product ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: result.data?.name,
-        price: result.data?.price,
-        stock: result.data?.stock,
-        image: result.data?.image,
-        category: result.data?.category,
-        description: result.data?.description,
-      }),
+      body: product
+        ? JSON.stringify({
+            name: result.data?.name,
+            slug: product.slug,
+            price: result.data?.price,
+            stock: result.data?.stock,
+            image: result.data?.image,
+            category: result.data?.category,
+            description: result.data?.description,
+          })
+        : JSON.stringify({
+            name: result.data?.name,
+            price: result.data?.price,
+            stock: result.data?.stock,
+            image: result.data?.image,
+            category: result.data?.category,
+            description: result.data?.description,
+          }),
     });
 
     if (res.ok) {
-      toast("Product added successfully");
+      const data = await res.json();
 
-      if (isResetFormOnSubmit) form.reset();
+      toast(`Product ${product ? "updated" : "created"} successfully`);
+      if (product) {
+        router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/products/${data.slug}`);
+      } else if (isResetFormOnSubmit) form.reset();
     } else {
-      console.error(await res.json());
+      alert(`Error ${product ? "updating" : "creating"} product. Please try again.`);
     }
   }
 
@@ -196,7 +211,7 @@ export default function ProductForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{product ? "Update" : "Submit"}</Button>
         </form>
       </Form>
     </div>

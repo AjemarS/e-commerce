@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/mongodb";
 import { translit } from "@/lib/utils";
 import { Schema, Types} from "mongoose";
 
-export interface IProduct extends Document {
+interface IProduct extends Document {
   name: string;
   slug: string;
   price: number;

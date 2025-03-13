@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/mongodb";
 import { translit } from "@/lib/utils";
 import { Schema } from "mongoose";
 
-export interface ICategory extends Document {
+interface ICategory extends Document {
   name: string;
   slug: string;
 }

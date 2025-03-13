@@ -32,8 +32,12 @@ export default function UserCenter({ user }: { user?: User }) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
+          {user?.role === "admin" && (
+            <DropdownMenuItem>
+              <Link href={"/admin"}>Admin</Link>
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>

@@ -1,4 +1,4 @@
-import AddProductForm from "@/components/forms/AddProductForm";
+import AddProductForm from "@/components/forms/ProductForm";
 import React from "react";
 
 export default function ProductsPage() {

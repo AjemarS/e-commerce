@@ -1,5 +1,6 @@
 import { auth, signIn } from "@/lib/auth";
-import { ICategory } from "@/models/Category";
+import { ICategory } from "@/types";
+
 
 export default async function CategoriesPage() {
   const session = await auth();

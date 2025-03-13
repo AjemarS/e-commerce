@@ -51,6 +51,6 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json(category);
   } catch (error: any) {
-    return NextResponse.json({ message: error.message});
+    return NextResponse.json({ message: error.message });
   }
 }

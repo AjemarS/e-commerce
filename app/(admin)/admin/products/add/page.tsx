@@ -1,4 +1,4 @@
-import AddProductForm from "@/components/forms/AddProductForm";
+import ProductForm from "@/components/forms/ProductForm";
 import { auth, signIn } from "@/lib/auth";
 
 export default async function ProductsPage() {
@@ -15,7 +15,7 @@ export default async function ProductsPage() {
   return (
     <div className="container flex justify-center items-center h-screen">
       <div className="w-1/3">
-        <AddProductForm />
+        <ProductForm />
       </div>
     </div>
   );

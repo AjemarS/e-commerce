@@ -1,10 +1,10 @@
 import { auth, signIn } from "@/lib/auth";
-import { IProduct } from "@/models/Product";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
+import { IProduct } from "@/types";
 
 export default async function ProductsPage() {
   const session = await auth();
